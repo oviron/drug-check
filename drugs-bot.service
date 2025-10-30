@@ -1,0 +1,22 @@
+[Unit]
+Description=Drugs Checker Bot
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/drugs
+Environment="NODE_ENV=production"
+ExecStart=/usr/bin/node /usr/bin/ts-node index.ts
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/ubuntu/drugs/app.log
+StandardError=append:/home/ubuntu/drugs/app.log
+
+# Убить процесс если он не останавливается за 30 секунд
+TimeoutStopSec=30
+KillSignal=SIGTERM
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target

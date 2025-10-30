@@ -1,0 +1,84 @@
+ИНСТРУКЦИЯ ПО УСТАНОВКЕ SYSTEMD СЕРВИСА
+========================================
+
+1. Сначала убей текущий процесс если он запущен:
+   ps aux | grep "ts-node.*index.ts" | grep -v grep
+   kill <PID>
+
+2. Отредактируй drugs-bot.service файл:
+   - Поменяй User=ubuntu на твоего юзера (если не ubuntu)
+   - Поменяй WorkingDirectory на путь к проекту
+   - Поменяй пути к логам если надо
+
+3. Скопируй сервис файл в системную папку:
+   sudo cp drugs-bot.service /etc/systemd/system/
+
+4. Перезагрузи systemd:
+   sudo systemctl daemon-reload
+
+5. Запусти сервис:
+   sudo systemctl start drugs-bot
+
+6. Включи автозапуск при старте системы:
+   sudo systemctl enable drugs-bot
+
+КОМАНДЫ ДЛЯ УПРАВЛЕНИЯ:
+=======================
+
+Проверить статус:
+  sudo systemctl status drugs-bot
+
+Посмотреть логи:
+  sudo journalctl -u drugs-bot -f
+
+Остановить:
+  sudo systemctl stop drugs-bot
+
+Перезапустить:
+  sudo systemctl restart drugs-bot
+
+Отключить автозапуск:
+  sudo systemctl disable drugs-bot
+
+Посмотреть логи из файла:
+  tail -f /home/ubuntu/drugs/app.log
+
+
+АЛЬТЕРНАТИВА: PM2 (ПРОЩЕ!)
+===========================
+
+1. Установи PM2 глобально:
+   sudo npm install -g pm2
+
+2. Убей старый процесс если есть:
+   ps aux | grep "ts-node.*index.ts" | grep -v grep
+   kill <PID>
+
+3. Запусти через PM2:
+   pm2 start ecosystem.config.js
+
+4. Сохрани конфигурацию для автозапуска:
+   pm2 save
+   pm2 startup
+   # Выполни команду которую покажет pm2 startup
+
+КОМАНДЫ PM2:
+============
+
+Статус:
+  pm2 status
+
+Логи в реальном времени:
+  pm2 logs drugs-bot
+
+Перезапустить:
+  pm2 restart drugs-bot
+
+Остановить:
+  pm2 stop drugs-bot
+
+Удалить из PM2:
+  pm2 delete drugs-bot
+
+Мониторинг:
+  pm2 monit
