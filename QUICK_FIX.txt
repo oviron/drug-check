@@ -1,0 +1,29 @@
+БЫСТРОЕ РЕШЕНИЕ ДЛЯ SYSTEMD
+===========================
+
+Если npm не в PATH, сделай так:
+
+1. Найди где npm:
+   which npm
+
+2. В drugs-bot.service замени ExecStart на полный путь:
+   ExecStart=/usr/local/bin/npm run start:service
+
+ИЛИ АЛЬТЕРНАТИВА (БЕЗ NPM):
+
+1. Найди где node:
+   which node
+
+2. В drugs-bot.service замени ExecStart на:
+   ExecStart=/usr/local/bin/node node_modules/.bin/ts-node index.ts
+
+ИЛИ СКОМПИЛИРУЙ В JS:
+
+1. Добавь build скрипт в package.json:
+   "build": "tsc",
+
+2. Запусти:
+   npm run build
+
+3. В drugs-bot.service:
+   ExecStart=/usr/local/bin/node dist/index.js

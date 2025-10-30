@@ -4,6 +4,7 @@
   "scripts": {
     "start": "ts-node index.ts",
     "start:prod": "nohup ts-node index.ts >> app.log 2>&1 &",
+    "start:service": "ts-node index.ts",
     "check": "ts-node index.ts --check-now",
     "logs": "tail -f app.log"
   },

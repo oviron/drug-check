@@ -1,13 +1,18 @@
 ИНСТРУКЦИЯ ПО УСТАНОВКЕ SYSTEMD СЕРВИСА
 ========================================
 
+ВАЖНО: Твоя версия не требует модификаций!
+  - systemd запустит npm, который найдет node и ts-node сам
+  - Логи пишет systemd через journalctl
+
 1. Сначала убей текущий процесс если он запущен:
    ps aux | grep "ts-node.*index.ts" | grep -v grep
    kill <PID>
 
 2. Отредактируй drugs-bot.service файл:
    - Поменяй User=ubuntu на твоего юзера (если не ubuntu)
-   - Поменяй WorkingDirectory на путь к проекту
+   - Поменяй WorkingDirectory на путь к проекту  
+   - ОБЯЗАТЕЛЬНО поменяй /path/to/node и /path/to/ts-node на реальные пути!
    - Поменяй пути к логам если надо
 
 3. Скопируй сервис файл в системную папку:
@@ -42,43 +47,3 @@
 
 Посмотреть логи из файла:
   tail -f /home/ubuntu/drugs/app.log
-
-
-АЛЬТЕРНАТИВА: PM2 (ПРОЩЕ!)
-===========================
-
-1. Установи PM2 глобально:
-   sudo npm install -g pm2
-
-2. Убей старый процесс если есть:
-   ps aux | grep "ts-node.*index.ts" | grep -v grep
-   kill <PID>
-
-3. Запусти через PM2:
-   pm2 start ecosystem.config.js
-
-4. Сохрани конфигурацию для автозапуска:
-   pm2 save
-   pm2 startup
-   # Выполни команду которую покажет pm2 startup
-
-КОМАНДЫ PM2:
-============
-
-Статус:
-  pm2 status
-
-Логи в реальном времени:
-  pm2 logs drugs-bot
-
-Перезапустить:
-  pm2 restart drugs-bot
-
-Остановить:
-  pm2 stop drugs-bot
-
-Удалить из PM2:
-  pm2 delete drugs-bot
-
-Мониторинг:
-  pm2 monit

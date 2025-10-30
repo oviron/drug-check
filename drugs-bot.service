@@ -4,14 +4,12 @@ After=network.target
 
 [Service]
 Type=simple
-User=ubuntu
-WorkingDirectory=/home/ubuntu/drugs
+User=oskvortsov
+WorkingDirectory=/home/oskvortsov/drug-check
 Environment="NODE_ENV=production"
-ExecStart=/usr/bin/node /usr/bin/ts-node index.ts
+ExecStart=npm run start:service
 Restart=always
 RestartSec=10
-StandardOutput=append:/home/ubuntu/drugs/app.log
-StandardError=append:/home/ubuntu/drugs/app.log
 
 # Убить процесс если он не останавливается за 30 секунд
 TimeoutStopSec=30
